@@ -1,10 +1,13 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import "./HeroSection.scss";
 import { carouselImages, mobileCarouselImages } from "../../libs/jmData";
 
 const HeroSection = () => {
   const [activeIndex, setActiveIndex] = useState(0);
   const [isMobile, setIsMobile] = useState(false);
+  const [touchStart, setTouchStart] = useState(0);
+  const [touchEnd, setTouchEnd] = useState(0);
+  const carouselRef = useRef(null);
 
   useEffect(() => {
     const handleResize = () => {
@@ -17,6 +20,51 @@ const HeroSection = () => {
       window.removeEventListener("resize", handleResize);
     };
   }, []);
+
+  useEffect(() => {
+    const interval = setInterval(goToNext, 5000); // Change slide every 5 seconds
+
+    return () => clearInterval(interval);
+  }, [activeIndex]);
+
+  const handleTouchStart = (event) => {
+    setTouchStart(event.touches[0].clientX);
+  };
+
+  const handleTouchMove = (event) => {
+    setTouchEnd(event.touches[0].clientX);
+  };
+
+  const handleTouchEnd = () => {
+    if (touchStart - touchEnd > 50) {
+      goToNext();
+    }
+    if (touchStart - touchEnd < -50) {
+      goToPrevious();
+    }
+  };
+
+  const handleMouseDown = (event) => {
+    setTouchStart(event.clientX);
+    document.addEventListener("mousemove", handleMouseMove);
+    document.addEventListener("mouseup", handleMouseUp);
+  };
+
+  const handleMouseMove = (event) => {
+    setTouchEnd(event.clientX);
+  };
+
+  const handleMouseUp = () => {
+    document.removeEventListener("mousemove", handleMouseMove);
+    document.removeEventListener("mouseup", handleMouseUp);
+
+    if (touchStart - touchEnd > 50) {
+      goToNext();
+    }
+    if (touchStart - touchEnd < -50) {
+      goToPrevious();
+    }
+  };
 
   const goToPrevious = () => {
     setActiveIndex((prevIndex) =>
@@ -36,9 +84,17 @@ const HeroSection = () => {
         : prevIndex + 1
     );
   };
+
   const renderImages = isMobile ? mobileCarouselImages : carouselImages;
   return (
-    <div className="carousel-container">
+    <div
+      className="carousel-container"
+      onTouchStart={handleTouchStart}
+      onTouchMove={handleTouchMove}
+      onTouchEnd={handleTouchEnd}
+      onMouseDown={handleMouseDown}
+      ref={carouselRef}
+    >
       <div className="carousel">
         <button className="prev" onClick={goToPrevious}>
           ❮

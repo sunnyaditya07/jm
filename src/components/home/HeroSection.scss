@@ -135,6 +135,14 @@
 @media only screen and (max-width: 1200px) {
 }
 @media only screen and (max-width: 768px) {
+  .prev,
+  .next {
+    display: none;
+  }
 }
 @media only screen and (max-width: 500px) {
+  .prev,
+  .next {
+    display: none;
+  }
 }
