@@ -30,7 +30,7 @@ const Header = () => {
                 JioMart
               </h1>
             </div>
-            <div className="jm-header-location-container">
+            {/* <div className="jm-header-location-container">
               <div className="jm-header-location-box">
                 <button className="jm-header-location-button">
                   <svg
@@ -49,7 +49,7 @@ const Header = () => {
                   </span>
                 </button>
               </div>
-            </div>
+            </div> */}
           </section>
           <section className="jm-header-search-signin-section">
             <div className="jm-header-search-box">
