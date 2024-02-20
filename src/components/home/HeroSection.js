@@ -50,7 +50,7 @@ const HeroSection = () => {
           <img
             key={index}
             src={image}
-            alt={`Image ${index + 1}`}
+            alt="carousel"
             className={index === activeIndex ? "active" : ""}
           />
         ))}
