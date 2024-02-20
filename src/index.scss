@@ -1,0 +1,52 @@
+// @import url("https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;600;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap");
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+html {
+  font-size: 62.5%;
+}
+body {
+  // font-family: "Rubik", sans-serif;
+  font-family: "Inter", sans-serif;
+  line-height: 1;
+  /* font-weight: 500; */
+  color: #141414;
+  background-color: #fff;
+  // margin-inline: 10rem;
+}
+
+.jm-bg-color {
+  background-color: #0078ad;
+}
+.jm-secondary-bg-color {
+  background-color: #0c5273;
+}
+
+.jm-product-title {
+  color: rgba(0, 0, 0, 0.65);
+}
+.jm-flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* @media only screen and (max-width: 1200px) {
+  body {
+    margin-inline: 2rem;
+  }
+}
+@media only screen and (max-width: 768px) {
+  body {
+    margin-inline: 1rem;
+  }
+}
+@media only screen and (max-width: 500px) {
+  body {
+    margin-inline: 2rem;
+  }
+} */

@@ -1,0 +1,140 @@
+// .carousel-container {
+//   position: relative;
+//   margin-top: 5rem;
+//   .carousel {
+//     position: relative;
+//     display: flex;
+//     justify-content: center;
+//     align-items: center;
+//     overflow: hidden;
+
+//     .prev,
+//     .next {
+//       position: absolute;
+//       top: 50%;
+//       transform: translateY(-50%);
+//       background-color: rgba(255, 255, 255, 0.6588235294);
+//       color: #0c5273;
+//       border: none;
+//       padding: 10px;
+//       cursor: pointer;
+//       width: 5rem;
+//       height: 5rem;
+//       border-radius: 50%;
+//       margin-inline: 2rem;
+//       font-size: 18px;
+//     }
+//   }
+// }
+
+// .carousel img {
+//   width: 100%;
+//   height: auto;
+//   display: none;
+// }
+
+// .carousel img.active {
+//   display: block;
+// }
+
+// .prev {
+//   left: 0;
+// }
+
+// .next {
+//   right: 0;
+// }
+
+// .indicators {
+//   text-align: center;
+//   margin-top: 10px;
+// }
+
+// .indicators span {
+//   display: inline-block;
+//   width: 10px;
+//   height: 10px;
+//   border-radius: 50%;
+//   background-color: gray;
+//   margin: 0 5px;
+//   cursor: pointer;
+// }
+
+// .indicators span.active {
+//   background-color: black;
+// }
+.carousel-container {
+  position: relative;
+  width: 100%;
+  max-width: 100%;
+  overflow: hidden;
+  margin-top: 5rem;
+}
+
+.carousel {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
+
+.carousel img {
+  width: 100%;
+  height: auto;
+  display: none;
+}
+
+.carousel img.active {
+  display: block;
+}
+
+.prev,
+.next {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: rgba(255, 255, 255, 0.6588235294);
+  color: #0c5273;
+  width: 5rem;
+  height: 5rem;
+  border: none;
+  padding: 10px;
+  border-radius: 50%;
+  cursor: pointer;
+  margin-inline: 1rem;
+}
+
+.prev {
+  left: 0;
+}
+
+.next {
+  right: 0;
+}
+
+.indicators {
+  text-align: center;
+  margin-top: 10px;
+}
+
+.indicators span {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background-color: gray;
+  margin: 0 5px;
+  cursor: pointer;
+}
+
+.indicators span.active {
+  background-color: black;
+}
+
+@media only screen and (max-width: 1200px) {
+}
+@media only screen and (max-width: 768px) {
+}
+@media only screen and (max-width: 500px) {
+}
