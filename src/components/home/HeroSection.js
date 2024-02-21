@@ -87,6 +87,7 @@ const HeroSection = () => {
   };
 
   const renderImages = isMobile ? mobileCarouselImages : carouselImages;
+  const translateValue = -100 * activeIndex + "%";
   return (
     <div
       className="carousel-container"
@@ -96,7 +97,10 @@ const HeroSection = () => {
       onMouseDown={handleMouseDown}
       ref={carouselRef}
     >
-      <div className="carousel">
+      <div
+        className="carousel"
+        style={{ transform: `translateX(${translateValue})` }}
+      >
         <button className="prev" onClick={goToPrevious}>
           ❮
         </button>

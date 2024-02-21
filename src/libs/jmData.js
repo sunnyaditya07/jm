@@ -34,6 +34,8 @@ import oneplus from "../assets/oneplus.jpg";
 import refrigerator from "../assets/refrigerator.jpg";
 import induction from "../assets/induction.jpg";
 import ptron from "../assets/ptron.jpg";
+import iphone15 from "../assets/iphone15.jpg";
+import redmi from "../assets/redmi.jpg";
 
 export const carouselImages = [image1, image2, image3, image4, image5, image6];
 export const mobileCarouselImages = [
@@ -243,5 +245,23 @@ export const productData = [
     price: "₹79.00",
     actualPrice: "₹2,599.00",
     off: "89% Off",
+  },
+  {
+    id: 23,
+    image: iphone15,
+    title: "Apple",
+    description: "Apple iPhone 15 Pro Max 256 GB",
+    price: "₹15999.00",
+    actualPrice: "₹159,900.00",
+    off: "94% Off",
+  },
+  {
+    id: 24,
+    image: redmi,
+    title: "REDMI",
+    description: "Redmi Note 12 Pro 5G, 8GB RAM",
+    price: "₹7999.00",
+    actualPrice: "₹31,999.00",
+    off: "86% Off",
   },
 ];
