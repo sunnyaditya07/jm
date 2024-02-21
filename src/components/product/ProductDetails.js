@@ -49,7 +49,7 @@ const ProductDetails = () => {
                     {product.price} <span>{product.actualPrice}</span>
                   </p>
                   <span className="jm-product-main-details-saved-price">
-                    You Save ₹{formattedPriceDifference}
+                    You Save ₹{formattedPriceDifference}.00
                   </span>
                   <p className="jm-product-main-details-seller-name">
                     Sold by: Reliance Retail
@@ -80,7 +80,7 @@ const ProductDetails = () => {
               <div className="jm-product-details-mrp-container">
                 <p className="jm-product-details-mrp-text">Product Discount</p>
                 <p className="jm-product-details-discount">
-                  - ₹{formattedPriceDifference}
+                  - ₹{formattedPriceDifference}.00
                 </p>
               </div>
               <div className="jm-product-details-mrp-container">
