@@ -2,6 +2,7 @@ import React from "react";
 import Header from "../reusable/Header";
 import HeroSection from "./HeroSection";
 import ProductList from "../product/ProductList";
+import Footer from "../reusable/Footer";
 
 const Home = () => {
   return (
@@ -9,6 +10,7 @@ const Home = () => {
       <Header />
       <HeroSection />
       <ProductList />
+      <Footer />
     </>
   );
 };
