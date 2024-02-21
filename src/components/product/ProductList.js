@@ -1,7 +1,12 @@
 import React from "react";
 import "./ProductList.scss";
 import { productData } from "../../libs/jmData";
+import { useNavigate } from "react-router-dom";
 const ProductList = () => {
+  const navigate = useNavigate();
+  const handleProductClick = (productId) => {
+    navigate(`/product/${productId}`);
+  };
   return (
     <>
       <div className="jm-product-list-cc-container">
@@ -14,7 +19,11 @@ const ProductList = () => {
       <div className="jm-productList-container">
         <section className="jm-productList-section">
           {productData.map((product) => (
-            <div className="jm-productList-item" key={product.id}>
+            <div
+              className="jm-productList-item"
+              key={product.id}
+              onClick={() => handleProductClick(product.id)}
+            >
               <div className="jm-productList-box">
                 <img
                   src={product.image}
@@ -36,7 +45,10 @@ const ProductList = () => {
                     </span>
                   </p>
                 </div>
-                <div className="jm-productList-add-conatiner">
+                <div
+                  className="jm-productList-add-conatiner"
+                  onClick={() => handleProductClick(product.id)}
+                >
                   <p className="jm-productList-add-text">Buy Now</p>
                 </div>
               </div>
