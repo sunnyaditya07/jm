@@ -29,8 +29,7 @@ const ProductList = () => {
                 </p>
               </div>
               <div className="jm-productList-add-conatiner">
-                <p className="jm-productList-add-text">Add</p>
-                <p className="jm-productList-add-icon">+</p>
+                <p className="jm-productList-add-text">Buy Now</p>
               </div>
             </div>
             <svg
