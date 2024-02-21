@@ -258,8 +258,11 @@
             .jm-product-details-image {
               width: 50%;
             }
-            .jm-product-main-details .jm-product-main-details-saved-price {
-              width: 60%;
+            .jm-product-main-details {
+              margin-top: 1rem;
+              .jm-product-main-details-saved-price {
+                width: 60%;
+              }
             }
           }
           .jm-product-details-quantity-container {
