@@ -1,8 +1,9 @@
 import React from "react";
 import "./ProductDetails.scss";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { productData } from "../../libs/jmData";
 const ProductDetails = () => {
+  const navigate = useNavigate();
   const { id } = useParams();
   const productId = parseInt(id);
   const product = productData.find((item) => item.id === productId);
@@ -14,6 +15,10 @@ const ProductDetails = () => {
   const formattedPriceDifference = priceDifference.toLocaleString("en-IN", {
     maximumFractionDigits: 2,
   });
+
+  const handleProductClick = (productId) => {
+    navigate(`/product/${productId}/checkout`);
+  };
   return (
     <div>
       <section className="jm-product-details-section">
@@ -95,7 +100,10 @@ const ProductDetails = () => {
                 <p className="jm-product-details-total">{product.price}</p>
               </div>
             </div>
-            <div className="jm-product-place-order-button">
+            <div
+              className="jm-product-place-order-button"
+              onClick={() => handleProductClick(product.id)}
+            >
               <p>Place Order</p>
             </div>
           </div>
@@ -108,7 +116,12 @@ const ProductDetails = () => {
           </div>
           <div className="jm-product-price-order-container">
             <p className="jm-product-detail-price-text">{product.price}</p>
-            <p className="jm-product-detail-order-text">Place Order</p>
+            <button
+              className="jm-product-detail-order-text"
+              onClick={() => handleProductClick(product.id)}
+            >
+              Place Order
+            </button>
           </div>
         </div>
       </section>

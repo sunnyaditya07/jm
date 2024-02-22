@@ -1,0 +1,99 @@
+.jm-address-form-section {
+  // margin-inline: 8rem;
+  margin-block: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  .jm-address-form-container {
+    width: 45%;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 0 19px 0 rgba(0, 0, 0, 0.1);
+    .jm-address-form-box {
+      padding: 4rem;
+      gap: 3rem;
+      display: flex;
+      flex-direction: column;
+      .jm-address-form-input-container {
+        display: flex;
+        flex-direction: column;
+        label {
+          font-size: 1.4rem;
+          margin-bottom: 0.8rem;
+        }
+        input {
+          outline: none;
+          border: none;
+          border-bottom: 1px solid #595958;
+          font-size: 1.4rem;
+          padding-bottom: 0.5rem;
+          &::placeholder {
+            opacity: 50%;
+          }
+        }
+        p {
+          margin-top: 0.6rem;
+          color: #c92a2a;
+          font-size: 1.2rem;
+        }
+      }
+    }
+    .jm-address-form-save-button-container {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 4rem;
+      button {
+        padding: 1.6rem 5rem;
+        cursor: pointer;
+        border: none;
+        background-color: #0078ad;
+        font-size: 1.4rem;
+        border-radius: 3rem;
+        color: #fff;
+        font-weight: 600;
+      }
+    }
+  }
+}
+
+@media only screen and (max-width: 1200px) {
+  // body {
+  //   margin-inline: 2rem;
+  // }
+}
+@media only screen and (max-width: 768px) {
+  // body {
+  //   margin-inline: 1rem;
+  // }
+  .jm-address-form-section {
+    .jm-address-form-container {
+      width: 60%;
+      // margin-bottom: 10rem;
+      .jm-address-form-box {
+        padding: 2rem;
+      }
+      .jm-address-form-save-button-container {
+        // display: none;
+      }
+    }
+  }
+}
+@media only screen and (max-width: 500px) {
+  // body {
+  //   margin-inline: 2rem;
+  // }
+  .jm-address-form-section {
+    .jm-address-form-container {
+      width: 90%;
+      margin-bottom: 10rem;
+      .jm-address-form-box {
+        padding: 2rem;
+      }
+      .jm-address-form-save-button-container {
+        display: none;
+      }
+    }
+  }
+}
