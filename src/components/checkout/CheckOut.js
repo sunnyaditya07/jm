@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import "./CheckOut.scss";
 import { productData } from "../../libs/jmData";
 import { useParams } from "react-router-dom";
 
