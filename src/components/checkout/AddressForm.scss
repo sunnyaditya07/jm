@@ -12,7 +12,7 @@
     box-shadow: 0 0 19px 0 rgba(0, 0, 0, 0.1);
     .jm-address-form-box {
       padding: 4rem;
-      gap: 3rem;
+      gap: 2rem;
       display: flex;
       flex-direction: column;
       .jm-address-form-input-container {
@@ -22,7 +22,7 @@
           font-size: 1.4rem;
           margin-bottom: 0.8rem;
         }
-        input {
+        .jm-addres-input {
           outline: none;
           border: none;
           border-bottom: 1px solid #595958;
@@ -32,6 +32,7 @@
             opacity: 50%;
           }
         }
+
         p {
           margin-top: 0.6rem;
           color: #c92a2a;
@@ -90,7 +91,7 @@
       .jm-address-form-box {
         padding: 2rem;
         // border: 3px solid red;
-        gap: 6rem;
+        // gap: 6rem;
       }
       .jm-address-form-save-button-container {
         display: none;

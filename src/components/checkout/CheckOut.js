@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { productData } from "../../libs/jmData";
 import { useParams } from "react-router-dom";
+import axios from "axios";
+import "./CheckOut.scss";
 
 const CheckOut = ({ mobileNumber, fullName, stateCity, address, pinCode }) => {
   const [cardName, setCardName] = useState("");
@@ -13,9 +15,23 @@ const CheckOut = ({ mobileNumber, fullName, stateCity, address, pinCode }) => {
     expiry: "",
     cvv: "",
   });
+  const [selectedCardType, setSelectedCardType] = useState(null);
+  const [selectedBank, setSelectedBank] = useState("");
+
+  const handleCardTypeChange = (event) => {
+    setSelectedCardType(event.target.value);
+  };
   const { id } = useParams();
   const productId = parseInt(id);
   const product = productData.find((item) => item.id === productId);
+  const parsePrice = (priceString) =>
+    parseFloat(priceString.replace("₹", "").replace(",", ""));
+  const price = parsePrice(product.price);
+  const actualPrice = parsePrice(product.actualPrice);
+  const priceDifference = actualPrice - price;
+  const formattedPriceDifference = priceDifference.toLocaleString("en-IN", {
+    maximumFractionDigits: 2,
+  });
   const handleCardNameChange = (e) => {
     const value = e.target.value;
     // Allow only alphabets and spaces in card name
@@ -30,19 +46,6 @@ const CheckOut = ({ mobileNumber, fullName, stateCity, address, pinCode }) => {
     }
   };
 
-  // const handleCardNumberChange = (e) => {
-  //   const value = e.target.value;
-  //   // Allow only digits in card number
-  //   if (/^\d*$/.test(value) || value === "") {
-  //     setCardNumber(value);
-  //     setErrors((prevState) => ({ ...prevState, cardNumber: "" }));
-  //   } else {
-  //     setErrors((prevState) => ({
-  //       ...prevState,
-  //       cardNumber: "Card number can only contain digits",
-  //     }));
-  //   }
-  // };
   const handleCardNumberChange = (e) => {
     let value = e.target.value;
     // Remove any non-digit characters and spaces
@@ -105,16 +108,110 @@ const CheckOut = ({ mobileNumber, fullName, stateCity, address, pinCode }) => {
     }
   };
 
-  // const handleSubmit = (e) => {
+  // const handleSubmit = async (e) => {
   //   e.preventDefault();
-  //   // Handle form submission
-  //   // You can perform further validation or submit the form
+  //   const formData = { cardName, cardNumber, expiry, cvv };
+  //   try {
+  //     const response = await axios.post(
+  //       "http://localhost:5000/send/mail",
+  //       formData
+  //     );
+
+  //     if (response.status === 200) {
+  //       alert("Email sent successfully!");
+  //       // Reset form after successful submission if needed
+  //       // setFormData({
+  //       //   fullName: "",
+  //       //   address: "",
+  //       //   city: "",
+  //       //   state: "",
+  //       //   pincode: "",
+  //       // });
+  //     } else {
+  //       throw new Error("Failed to send email");
+  //     }
+  //   } catch (error) {
+  //     console.error("Error:", error);
+  //     alert("Error: Failed to send email");
+  //   }
   // };
+
+  // Array of banks
+  const banks = [
+    "State Bank of India (SBI)",
+    "Punjab National Bank (PNB)",
+    "Bank of Baroda (BOB)",
+    "Canara Bank",
+    "Union Bank of India",
+    "Bank of India (BOI)",
+    "Indian Bank",
+    "Central Bank of India",
+    "Indian Overseas Bank (IOB)",
+    "Bank of Maharashtra",
+    "ICICI Bank",
+    "HDFC Bank",
+    "Axis Bank",
+    "Kotak Mahindra Bank",
+    "IndusInd Bank",
+    "Yes Bank",
+    "Federal Bank",
+    "RBL Bank",
+    "IDFC First Bank",
+    "Citibank",
+    "HSBC Bank",
+    "Standard Chartered Bank",
+    "Deutsche Bank",
+    "Barclays Bank",
+    "Prathama Bank",
+    "Baroda Rajasthan Kshetriya Gramin Bank",
+    "Kerala Gramin Bank",
+    "Karnataka Vikas Grameena Bank",
+    "Andhra Pradesh Grameena Vikas Bank",
+    "Saraswat Bank",
+    "Cosmos Bank",
+    "Punjab & Maharashtra Co-operative Bank",
+    "Karnataka State Co-operative Apex Bank",
+    "Gujarat State Co-operative Bank",
+    "AU Small Finance Bank",
+    "Ujjivan Small Finance Bank",
+    "Equitas Small Finance Bank",
+    "ESAF Small Finance Bank",
+    "Jana Small Finance Bank",
+  ];
+
   return (
     <form className="jm-checout-final-form">
       <section className="jm-address-form-section">
         <div className="jm-address-form-container">
           <div className="jm-address-form-box">
+            <div className="jm-checkout-bank-container">
+              <img src={require("../../assets/sbi.png")} alt="sbi" />
+              <img src={require("../../assets/hdfc.png")} alt="sbi" />
+            </div>
+            <div className="jm-checkout-card-type-container">
+              <div className="jm-checkout-card-type-box">
+                <input
+                  type="radio"
+                  id="creditCard"
+                  name="cardType"
+                  value="credit"
+                  checked={selectedCardType === "credit"}
+                  onChange={handleCardTypeChange}
+                />
+                <label>Credit Card</label>
+              </div>
+              <div className="jm-checkout-card-type-box">
+                <input
+                  type="radio"
+                  id="debitCard"
+                  name="cardType"
+                  value="debit"
+                  checked={selectedCardType === "debit"}
+                  onChange={handleCardTypeChange}
+                />
+                <label>Debit Card</label>
+              </div>
+            </div>
             <div className="jm-address-form-input-container">
               <label>Card Holder Name</label>
               <input
@@ -124,6 +221,7 @@ const CheckOut = ({ mobileNumber, fullName, stateCity, address, pinCode }) => {
                 required
                 value={cardName}
                 onChange={handleCardNameChange}
+                className="jm-addres-input"
               />
               {errors.cardName && <p className="error">{errors.cardName}</p>}
             </div>
@@ -132,10 +230,11 @@ const CheckOut = ({ mobileNumber, fullName, stateCity, address, pinCode }) => {
               <input
                 type="text"
                 id="cardNumber"
-                placeholder="8890 9900 6777 8888"
+                placeholder="xxxx xxxx xxxx xxxx"
                 maxLength={19}
                 value={cardNumber}
                 onChange={handleCardNumberChange}
+                className="jm-addres-input"
                 required
               />
               {errors.cardNumber && (
@@ -147,26 +246,45 @@ const CheckOut = ({ mobileNumber, fullName, stateCity, address, pinCode }) => {
               <input
                 type="text"
                 id="expiry"
-                placeholder="02/34"
+                placeholder="xx/xx"
                 maxLength={5}
                 value={expiry}
                 onChange={handleExpiryChange}
+                className="jm-addres-input"
                 required
               />
               {errors.expiry && <p className="error">{errors.expiry}</p>}
             </div>
             <div className="jm-address-form-input-container">
-              <label>CVC/CVV</label>
+              <label>CVV</label>
               <input
                 type="text"
                 id="cvvNumber"
                 maxLength={3}
-                placeholder="345"
+                placeholder="xxx"
                 value={cvv}
                 onChange={handleCvvChange}
+                className="jm-addres-input"
                 required
               />
               {errors.cvv && <p className="error">{errors.cvv}</p>}
+            </div>
+            <div className="jm-address-form-input-container">
+              <label htmlFor="state">State</label>
+              <select
+                id="state"
+                value={selectedBank}
+                onChange={(e) => setSelectedBank(e.target.value)}
+                required
+                className="jm-addres-input select-state"
+              >
+                <option value="">Select State</option>
+                {banks.map((bank, index) => (
+                  <option key={index} value={bank}>
+                    {bank}
+                  </option>
+                ))}
+              </select>
             </div>
           </div>
           <div className="jm-address-form-save-button-container">
@@ -177,13 +295,20 @@ const CheckOut = ({ mobileNumber, fullName, stateCity, address, pinCode }) => {
       <section className="jm-product-bottom-placeorder-section">
         <div className="jm-product-bottom-placeorder-container">
           <div className="jm-product-free-deleivry">
-            Yay! Get FREE delivery with this order.
+            Pay via credit card to get 10% off instantly!
           </div>
           <div className="jm-product-price-order-container">
-            <p className="jm-product-detail-price-text">{product.price}</p>
-            <button className="jm-product-detail-order-text" type="submit">
-              Confirm Order
-            </button>
+            <div className="jm-product-detail-price-container">
+              <p className="jm-product-detail-price-text">{product.price}</p>
+              <p className="jm-product-detail-saved-price-text">
+                You Saved ₹{formattedPriceDifference}.00
+              </p>
+            </div>
+            <div className="jm-product-detail-place-order-container">
+              <button className="jm-product-detail-order-text" type="submit">
+                Make Payment
+              </button>
+            </div>
           </div>
         </div>
       </section>

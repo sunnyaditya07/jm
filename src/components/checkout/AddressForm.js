@@ -7,7 +7,8 @@ import CheckOut from "./CheckOut";
 const AddressForm = () => {
   const [fullName, setFullName] = useState("");
   const [mobileNumber, setMobileNumber] = useState("");
-  const [stateCity, setStateCity] = useState("");
+  const [city, setCity] = useState("");
+  const [selectedState, setSelectedState] = useState("");
   const [address, setAddress] = useState("");
   const [pinCode, setPinCode] = useState("");
   const [errors, setErrors] = useState({});
@@ -15,6 +16,15 @@ const AddressForm = () => {
   const { id } = useParams();
   const productId = parseInt(id);
   const product = productData.find((item) => item.id === productId);
+
+  const parsePrice = (priceString) =>
+    parseFloat(priceString.replace("₹", "").replace(",", ""));
+  const price = parsePrice(product.price);
+  const actualPrice = parsePrice(product.actualPrice);
+  const priceDifference = actualPrice - price;
+  const formattedPriceDifference = priceDifference.toLocaleString("en-IN", {
+    maximumFractionDigits: 2,
+  });
 
   const validateFullName = (input) => {
     const regex = /[0-9]/;
@@ -94,19 +104,56 @@ const AddressForm = () => {
       }
     }
   };
+
   const handleProceed = (e) => {
     e.preventDefault();
-    console.log(mobileNumber, fullName, stateCity, address, pinCode);
+    console.log(mobileNumber, fullName, city, address, pinCode);
     console.log("Hello");
     setCheckOutVisible(true);
   };
+  const IndianStates = [
+    "Andhra Pradesh",
+    "Arunachal Pradesh",
+    "Assam",
+    "Bihar",
+    "Chhattisgarh",
+    "Goa",
+    "Gujarat",
+    "Haryana",
+    "Himachal Pradesh",
+    "Jharkhand",
+    "Karnataka",
+    "Kerala",
+    "Madhya Pradesh",
+    "Maharashtra",
+    "Manipur",
+    "Meghalaya",
+    "Mizoram",
+    "Nagaland",
+    "Odisha",
+    "Punjab",
+    "Rajasthan",
+    "Sikkim",
+    "Tamil Nadu",
+    "Telangana",
+    "Tripura",
+    "Uttar Pradesh",
+    "Uttarakhand",
+    "West Bengal",
+    "Andaman and Nicobar Islands",
+    "Chandigarh",
+    "Dadra and Nagar Haveli and Daman and Diu",
+    "Delhi",
+    "Lakshadweep",
+    "Puducherry",
+  ];
   return (
     <>
       {CheckOutVisible ? (
         <CheckOut
           mobileNumber={mobileNumber}
           fullName={fullName}
-          stateCity={stateCity}
+          city={city}
           address={address}
           pinCode={pinCode}
         />
@@ -115,6 +162,7 @@ const AddressForm = () => {
           <section className="jm-address-form-section">
             <div className="jm-address-form-container" onSubmit={handleProceed}>
               <div className="jm-address-form-box">
+                <h1>BILLING & SHIPPING</h1>
                 <div className="jm-address-form-input-container">
                   <label>Full name</label>
                   <input
@@ -123,6 +171,7 @@ const AddressForm = () => {
                     value={fullName}
                     onChange={handleFullNameChange}
                     required
+                    className="jm-addres-input"
                   />
                   {errors.fullName && (
                     <p className="error">{errors.fullName}</p>
@@ -136,23 +185,40 @@ const AddressForm = () => {
                     value={mobileNumber}
                     onChange={handleMobileNumberChange}
                     required
+                    className="jm-addres-input"
                   />
                   {errors.mobileNumber && (
                     <p className="error">{errors.mobileNumber}</p>
                   )}
                 </div>
                 <div className="jm-address-form-input-container">
-                  <label htmlFor="stateCity">State and City</label>
+                  <label htmlFor="state">State</label>
+                  <select
+                    id="state"
+                    value={selectedState}
+                    onChange={(e) => setSelectedState(e.target.value)}
+                    required
+                    className="jm-addres-input select-state"
+                  >
+                    <option value="">Select State</option>
+                    {IndianStates.map((state, index) => (
+                      <option key={index} value={state}>
+                        {state}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+                <div className="jm-address-form-input-container">
+                  <label htmlFor="City">City</label>
                   <input
                     type="text"
-                    id="stateCity"
-                    value={stateCity}
-                    onChange={(e) => setStateCity(e.target.value)}
+                    id="City"
+                    value={city}
+                    onChange={(e) => setCity(e.target.value)}
                     required
+                    className="jm-addres-input"
                   />
-                  {errors.stateCity && (
-                    <p className="error">{errors.stateCity}</p>
-                  )}
+                  {errors.city && <p className="error">{errors.city}</p>}
                 </div>
                 <div className="jm-address-form-input-container">
                   <label>Address</label>
@@ -162,6 +228,7 @@ const AddressForm = () => {
                     value={address}
                     onChange={(e) => setAddress(e.target.value)}
                     required
+                    className="jm-addres-input"
                   />
                   {errors.address && <p className="error">{errors.address}</p>}
                 </div>
@@ -173,6 +240,7 @@ const AddressForm = () => {
                     value={pinCode}
                     onChange={handlePinCodeChange}
                     required
+                    className="jm-addres-input"
                   />
                   {errors.pinCode && <p className="error">{errors.pinCode}</p>}
                 </div>
@@ -187,11 +255,23 @@ const AddressForm = () => {
               <div className="jm-product-free-deleivry">
                 Yay! Get FREE delivery with this order.
               </div>
-              <div className="jm-product-price-order-container">
-                <p className="jm-product-detail-price-text">{product.price}</p>
-                <button className="jm-product-detail-order-text" type="submit">
-                  Proceed
-                </button>
+              <div className="jm-product-price-order-container ">
+                <div className="jm-product-detail-price-container">
+                  <p className="jm-product-detail-price-text">
+                    {product.price}
+                  </p>
+                  <p className="jm-product-detail-saved-price-text">
+                    You Saved ₹{formattedPriceDifference}.00
+                  </p>
+                </div>
+                <div className="jm-product-detail-place-order-container">
+                  <button
+                    className="jm-product-detail-order-text"
+                    type="submit"
+                  >
+                    Save & Proceed
+                  </button>
+                </div>
               </div>
             </div>
           </section>

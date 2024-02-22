@@ -217,20 +217,35 @@
       justify-content: space-between;
       padding-inline: 1.6rem;
       margin-block: 1rem;
-      .jm-product-detail-price-text {
+      .jm-product-detail-price-container {
         padding-block: 1.5rem;
-        color: #000;
-        font-size: 1.6rem;
-        font-weight: 700;
+        .jm-product-detail-price-text {
+          color: #000;
+          font-size: 1.6rem;
+          font-weight: 700;
+        }
+        .jm-product-detail-saved-price-text {
+          color: #03753c;
+          font-weight: 700;
+          margin-top: 0.5rem;
+          font-size: 1.4rem;
+        }
       }
-      .jm-product-detail-order-text {
-        padding: 1.5rem 3rem;
-        background-color: #0078ad;
-        font-size: 1.6rem;
-        border-radius: 3rem;
-        color: #fff;
-        border: none;
-        cursor: pointer;
+      .jm-product-detail-place-order-container {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        .jm-product-detail-order-text {
+          // padding: 1.5rem 6rem;
+          background-color: #0078ad;
+          font-size: 1.6rem;
+          border-radius: 3rem;
+          color: #fff;
+          border: none;
+          cursor: pointer;
+          height: 5rem;
+          padding-inline: 2rem;
+        }
       }
     }
   }

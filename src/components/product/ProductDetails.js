@@ -115,13 +115,21 @@ const ProductDetails = () => {
             Yay! Get FREE delivery with this order.
           </div>
           <div className="jm-product-price-order-container">
-            <p className="jm-product-detail-price-text">{product.price}</p>
-            <button
-              className="jm-product-detail-order-text"
-              onClick={() => handleProductClick(product.id)}
-            >
-              Place Order
-            </button>
+            <div className="jm-product-detail-price-container">
+              <p className="jm-product-detail-price-text">{product.price}</p>
+              <p className="jm-product-detail-saved-price-text">
+                You Saved ₹{formattedPriceDifference}.00
+              </p>
+            </div>
+
+            <div className="jm-product-detail-place-order-container">
+              <button
+                className="jm-product-detail-order-text"
+                onClick={() => handleProductClick(product.id)}
+              >
+                Place Order
+              </button>
+            </div>
           </div>
         </div>
       </section>

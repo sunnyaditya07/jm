@@ -1,0 +1,23 @@
+.jm-checkout-card-type-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  .jm-checkout-card-type-box {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.6rem;
+    input {
+      transform: scale(1.5);
+    }
+    label {
+      font-size: 1.6rem;
+    }
+  }
+}
+.jm-checkout-bank-container {
+  img {
+    width: 100%;
+  }
+}
