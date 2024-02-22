@@ -74,9 +74,6 @@
       .jm-address-form-box {
         padding: 2rem;
       }
-      .jm-address-form-save-button-container {
-        // display: none;
-      }
     }
   }
 }
@@ -85,11 +82,15 @@
   //   margin-inline: 2rem;
   // }
   .jm-address-form-section {
+    height: 70vh;
+    width: 100%;
     .jm-address-form-container {
       width: 90%;
-      margin-bottom: 10rem;
+      // margin-bottom: 10rem;
       .jm-address-form-box {
         padding: 2rem;
+        // border: 3px solid red;
+        gap: 6rem;
       }
       .jm-address-form-save-button-container {
         display: none;
