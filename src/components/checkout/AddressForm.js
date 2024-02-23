@@ -107,8 +107,6 @@ const AddressForm = () => {
 
   const handleProceed = (e) => {
     e.preventDefault();
-    console.log(mobileNumber, fullName, city, address, pinCode);
-    console.log("Hello");
     setCheckOutVisible(true);
   };
   const IndianStates = [
@@ -151,8 +149,9 @@ const AddressForm = () => {
     <>
       {CheckOutVisible ? (
         <CheckOut
-          mobileNumber={mobileNumber}
           fullName={fullName}
+          mobileNumber={mobileNumber}
+          selectedState={selectedState}
           city={city}
           address={address}
           pinCode={pinCode}

