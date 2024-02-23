@@ -31,8 +31,27 @@
           aspect-ratio: 3/2;
           object-fit: contain;
         }
+        .jm-productList-limited {
+          display: flex;
+          align-items: center;
+          gap: 3px;
+          .jm-productList-limited-text {
+            font-size: 1.2rem;
+            font-weight: 700;
+          }
+        }
         .jm-productList-details-container {
           margin-top: 2rem;
+          .jm-productList-trending-text {
+            padding: 0.2rem 0.8rem;
+            width: 70px;
+            border-radius: 4px;
+            background-color: #ffe3e3;
+            font-size: 1.2rem;
+            color: #ff8787;
+            font-weight: 700;
+            margin-bottom: 5px;
+          }
           .jm-productList-product-title {
             color: rgba(0, 0, 0, 0.65);
             font-size: 1.4rem;
@@ -131,6 +150,11 @@
         width: 100%;
         .jm-productList-box {
           display: flex;
+          position: relative;
+          .jm-productList-limited {
+            position: absolute;
+            bottom: 10px;
+          }
           .jp-productlist-image {
             width: 12rem;
           }
